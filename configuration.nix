@@ -117,6 +117,7 @@
     curl
     git
     vim
+    zed-editor
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

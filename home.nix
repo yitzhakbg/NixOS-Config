@@ -68,8 +68,14 @@
   #  /etc/profiles/per-user/ybg/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = " vim";
   };
+
+programs.git = {
+  enable = true;
+  userEmail = "yitzhakbargeva.gmail.com";
+  userName = "yitzhakbg";
+};
 
   programs.fish.enable = true;
 
