@@ -73,8 +73,16 @@
 
 programs.git = {
   enable = true;
+  aliases = {
+    ci = "commit";
+    co = "checkout";
+    s = "status";
+  };
   userEmail = "yitzhakbargeva.gmail.com";
   userName = "yitzhakbg";
+  extraConfig = {
+    push = { autoSetupRemote = true; };
+  };
 };
 
   programs.fish.enable = true;
