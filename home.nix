@@ -80,6 +80,7 @@ programs.git = {
   };
   userEmail = "yitzhakbargeva.gmail.com";
   userName = "yitzhakbg";
+  package = pkgs.gitFull;
   extraConfig = {
   #  credential.helper = "manager";
   #  credential."https://github.com" = {
