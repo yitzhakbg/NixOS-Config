@@ -81,6 +81,10 @@ programs.git = {
   userEmail = "yitzhakbargeva.gmail.com";
   userName = "yitzhakbg";
   extraConfig = {
+    credential.helper = "manager";
+    credential."https://github.com" = {
+      helper = "manager";
+    };
     push = { autoSetupRemote = true; };
   };
 };

@@ -112,6 +112,8 @@
     wget
     curl
     git
+    git-credential-manager-core
+    git-credential-manager
     vim
     brave
     gh
