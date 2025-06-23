@@ -85,10 +85,6 @@
     description = "ybg";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
-    packages = with pkgs; [
-      brave
-    #  thunderbird
-    ];
   };
 
   # Enable automatic login for the user.
@@ -117,6 +113,8 @@
     curl
     git
     vim
+    brave
+    gh
     zed-editor
   ];
 
