@@ -114,7 +114,7 @@
     gitFull
 #    git-credential-manager-core
 #    git-credential-manager
-    keepassx
+    keepassxc
     vim
     brave
     gh
