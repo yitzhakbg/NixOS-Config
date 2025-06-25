@@ -115,6 +115,7 @@
 #    git-credential-manager-core
 #    git-credential-manager
     keepassxc
+    ghostty
     vim
     brave
     gh
