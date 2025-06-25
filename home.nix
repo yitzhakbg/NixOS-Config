@@ -18,6 +18,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+    pkgs.eza
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -68,7 +69,7 @@
   #  /etc/profiles/per-user/ybg/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = " vim";
+    EDITOR = "vim";
   };
 
 programs.git = {
@@ -91,6 +92,8 @@ programs.git = {
 };
 
   programs.fish.enable = true;
+  programs.eza.enable = true;
+  programs.eza.enableFishIntegration = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

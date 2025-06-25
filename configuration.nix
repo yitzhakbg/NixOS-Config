@@ -112,8 +112,9 @@
     wget
     curl
     gitFull
-    git-credential-manager-core
-    git-credential-manager
+#    git-credential-manager-core
+#    git-credential-manager
+    keepassx
     vim
     brave
     gh
@@ -131,7 +132,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
