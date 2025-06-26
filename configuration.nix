@@ -85,6 +85,17 @@
     description = "ybg";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
+    packages = with pkgs; [
+      eza
+      bat
+      zoxide
+      fd
+      dust
+      bottom
+      gping
+      starship
+      fzf
+    ];
   };
 
   # Enable automatic login for the user.
