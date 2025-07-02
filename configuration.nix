@@ -5,11 +5,11 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./nvidia.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./nvidia.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -83,12 +83,14 @@
   users.users.ybg = {
     isNormalUser = true;
     description = "ybg";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.fish;
     packages = with pkgs; [
       eza
       bat
-      zoxide
       fd
       dust
       bottom
@@ -107,10 +109,14 @@
   systemd.services."autovt@tty1".enable = false;
 
   # Install firefox.
-  programs.firefox.enable = true;
+  programs.firefox.enable = false;
 
-  # environment.shells = with pkgs; [ bash zsh fish ];
-  # users.defaultUserShell = pkgs.fish;
+  environment.shells = with pkgs; [
+    bash
+    zsh
+    fish
+  ];
+  users.defaultUserShell = pkgs.fish;
   programs.fish.enable = true;
 
   # Allow unfree packages
@@ -119,18 +125,22 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     curl
     gitFull
-#    git-credential-manager-core
-#    git-credential-manager
+    #    git-credential-manager-core
+    #    git-credential-manager
     keepassxc
     ghostty
     vim
     brave
     gh
     zed-editor
+    mpv
+    zoxide
+    nixd
+    nil # in addition to nixd
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -160,5 +170,17 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+  nix.settings.download-buffer-size = 500000000;
+  nix.gc = {
+    # Automate garbage collection
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
+  nix.optimise.automatic = true;
+  nix.optimise.dates = [ "03:45" ]; # Optional; allows customizing optimisation schedule
 }
