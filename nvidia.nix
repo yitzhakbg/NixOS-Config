@@ -35,7 +35,7 @@
 
     hardware.nvidia = {
       # prime = {
-      #   nvidiaBusId = "PCI:1:0";
+      #   nvidiaBusId = "PCI:1:0:0";
       #   offload = {
       #     enable = true;
       #     enableOffloadCmd = true;

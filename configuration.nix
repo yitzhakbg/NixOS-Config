@@ -135,6 +135,7 @@
     ghostty
     vim
     brave
+    discord
     gh
     zed-editor
     mpv
