@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
 
@@ -7,13 +12,34 @@
   };
 
   config = {
-    boot.kernelParams = [ "nvidia_drm.fbdev=1" "nvidia-drm.modeset=1" "module_blacklist=i915" ];
-    boot.initrd.kernelModules = [ "nvidia" "i915" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+    boot.kernelParams = [
+      "nvidia_drm.fbdev=1"
+      "nvidia-drm.modeset=1"
+      "module_blacklist=i915"
+    ];
+    boot.initrd.kernelModules = [
+      "nvidia"
+      "nvidia_modeset"
+      "nvidia_uvm"
+      "nvidia_drm"
+    ];
 
     hardware.graphics = {
       enable = true;
       # driSupport = true;
       # driSupport32Bit = true;
+    };
+
+    environment.variables = {
+      GBM_BACKEND = "nvidia-drm";
+      #__GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      MOZ_DISABLE_RDD_SANDBOX = "1";
+      LIBVA_DRIVER_NAME = "nvidia";
+      #NIXOS_OZONE_WL= "1";
+      WLR_NO_HARDWARE_CURSORS = "1";
+      #MOZ_ENABLE_WAYLAND = "1";
+      NVD_BACKEND = "direct";
+      #XDG_SESSION_TYPE = "wayland";
     };
 
     environment.systemPackages = with pkgs; [
@@ -22,7 +48,7 @@
       vulkan-tools
       vulkan-validation-layers
       libvdpau-va-gl
-      egl-wayland
+      # egl-wayland
       wgpu-utils
       mesa
       libglvnd

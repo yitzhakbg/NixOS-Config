@@ -86,6 +86,8 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "podman"
+      "docker"
     ];
     shell = pkgs.fish;
     packages = with pkgs; [
@@ -142,6 +144,7 @@
     zoxide
     nixd
     nil # in addition to nixd
+    podman-desktop
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -175,6 +178,12 @@
     "nix-command"
     "flakes"
   ];
+  # Enable Flox
+  nix.settings.trusted-substituters = [ "https://cache.flox.dev" ];
+  nix.settings.trusted-public-keys = [
+    "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="
+  ];
+
   nix.settings.download-buffer-size = 500000000;
   nix.gc = {
     # Automate garbage collection
@@ -184,4 +193,6 @@
   };
   nix.optimise.automatic = true;
   nix.optimise.dates = [ "03:45" ]; # Optional; allows customizing optimisation schedule
+  nix.optimise.options = "--delete-older-than 7d";
+
 }
