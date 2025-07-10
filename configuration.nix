@@ -9,7 +9,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./nvidia.nix
-    ./gow_nix.nix
+    ./gow_wolf.nix
   ];
 
   # Bootloader.
