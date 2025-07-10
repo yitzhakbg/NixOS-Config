@@ -55,6 +55,7 @@
       #  nvtop
       nvitop
       libGL
+      libnvidia-container
     ];
 
     services.xserver.videoDrivers = [ "nvidia" ];
