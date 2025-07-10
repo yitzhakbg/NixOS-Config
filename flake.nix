@@ -26,7 +26,6 @@
           inherit system;
           modules = [
             ./configuration.nix
-            ./gow_nix.nix
           ];
         };
       };
