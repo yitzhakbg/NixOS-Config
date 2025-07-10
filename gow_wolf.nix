@@ -179,43 +179,25 @@ in
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
-          ExecStart = pkgs.writeShellScript "build-nvidia-volume" ''
+          ExecStart = pkgs.writeShellScript "build-nvidia-volume and nvidia-caps" ''
             set -euo pipefail
 
             MARKER=/etc/wolf/.nvidia-driver-vol-ready
-
-            if [ -f "$MARKER" ]; then
-              echo "NVIDIA driver volume already built. Skipping."
-              exit 0
-            fi
-
-            echo "Building NVIDIA driver volume - Started"
-            curl https://raw.githubusercontent.com/games-on-whales/gow/master/images/nvidia-driver/Dockerfile \
-              | docker build -t gow/nvidia-driver:latest -f - --build-arg NV_VERSION=$(cat /sys/module/nvidia/version) .
-            docker create --rm --mount source=nvidia-driver-vol,destination=/usr/nvidia gow/nvidia-driver:latest sh
-
-            echo "Building NVIDIA driver volume - Finished"
-            touch "$MARKER"
-          '';
-          ExecStart = pkgs.writeShellScript "build-nvidia-caps" ''
-            set -euo pipefail
-
             NVIDIA_CAPS=/dev/nvidia-caps
-
-            if [ -f "$NVIDIA_CAPS" ]; then
-              echo "/dev/nvidia-caps already exists."
-              exit 0
+            if [ ! -f "$NVIDIA_CAPS" ]; then
+              echo "Building NVIDIA-CAPS"
+              nvidia-container-cli --load-kmods info
             fi
 
-            echo "Building NVIDIA-CAPS"
-            nvidia-container-cli --load-kmods info
+            if [ ! -f "$MARKER" ]; then
+              echo "Building NVIDIA driver volume - Started"
+              curl https://raw.githubusercontent.com/games-on-whales/gow/master/images/nvidia-driver/Dockerfile \
+                | docker build -t gow/nvidia-driver:latest -f - --build-arg NV_VERSION=$(cat /sys/module/nvidia/version) .
+              docker create --rm --mount source=nvidia-driver-vol,destination=/usr/nvidia gow/nvidia-driver:latest sh
 
-            if [ -f "$NVIDIA_CAPS" ]; then
-              echo "/dev/nvidia-caps built successfully."
-              exit 0
+              echo "Building NVIDIA driver volume - Finished"
+              touch "$MARKER"
             fi
-            echo "/dev/nvidia-caps build failed."
-            exit 1
           '';
         };
 
