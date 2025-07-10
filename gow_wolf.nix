@@ -99,7 +99,6 @@ in
       # Required packages
       environment.systemPackages = with pkgs; [
         docker
-        docker-desktop
         docker-compose
       ];
 

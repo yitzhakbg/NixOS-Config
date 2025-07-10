@@ -145,7 +145,9 @@
     zoxide
     nixd
     nil # in addition to nixd
-    podman-desktop
+    # podman-desktop
+    docker
+    docker-compose
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
