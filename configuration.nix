@@ -9,7 +9,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./nvidia.nix
-    # ./gow_nix.nix
+    ./gow_nix.nix
   ];
 
   # Bootloader.
@@ -146,8 +146,8 @@
     nixd
     nil # in addition to nixd
     # podman-desktop
-    docker
-    docker-compose
+    # docker
+    # docker-compose
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
