@@ -146,8 +146,8 @@
     nixd
     nil # in addition to nixd
     # podman-desktop
-    # docker
-    # docker-compose
+    docker
+    docker-compose
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
