@@ -9,8 +9,12 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./nvidia.nix
-    ./gow_wolf.nix
+    # ./gow_wolf.nix
   ];
+  gow_wolf = {
+    enable = true;
+    # Additional configuration options can be added here
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
