@@ -11,7 +11,9 @@
     ./nvidia.nix
     ./gow_wolf.nix
   ];
-  services.gow_wolf.enable = true;
+  extraServices = {
+    gow_wolf.enable = true;
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
