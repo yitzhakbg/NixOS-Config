@@ -66,7 +66,7 @@
 
   # Enable sound with pipewire.
   # services.pulseaudio. enable = false;
-  security.rtkit.enable = true;
+  # security.rtkit.enable = true;
   # services.pipewire = {
   #   enable = true;
   #   alsa.enable = true;
@@ -85,7 +85,7 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ybg = {
-    isNormalUser = true;
+    isSystemUser = true;
     description = "ybg";
     extraGroups = [
       "networkmanager"
