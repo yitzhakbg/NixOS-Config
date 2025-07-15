@@ -41,7 +41,7 @@
       NVD_BACKEND = "direct";
       #XDG_SESSION_TYPE = "wayland";
     };
-    nixGL.vulkan.enable = true;
+    # nixGL.vulkan.enable = true;
     environment.systemPackages = with pkgs; [
       libva-utils
       vdpauinfo
@@ -55,6 +55,7 @@
       #  nvtop
       nvitop
       libGL
+      libnvidia-container
     ];
 
     services.xserver.videoDrivers = [ "nvidia" ];

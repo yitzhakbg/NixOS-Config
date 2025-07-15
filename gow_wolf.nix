@@ -152,11 +152,11 @@ in
       hardware.pulseaudio.support32Bit = true;
 
       # Extra groups (not entirely sure this is needed)
-      users.groups.ops.gid = 1000;
-      users.extraUsers.ops.extraGroups = [
-        "audio"
-        "ops"
-      ];
+      # users.groups.ops.gid = 1000;
+      # users.extraUsers.ops.extraGroups = [
+      #   "audio"
+      #   "ops"
+      # ];
 
       # Create the necessary directories
       systemd.tmpfiles.rules = [
@@ -181,12 +181,13 @@ in
           RemainAfterExit = true;
           ExecStart = pkgs.writeShellScript "build-nvidia-volume and nvidia-caps" ''
             set -euo pipefail
+            set PATH=$PATH:/run/current-system/sw/bin
 
             MARKER=/etc/wolf/.nvidia-driver-vol-ready
             NVIDIA_CAPS=/dev/nvidia-caps
-            if [ ! -f "$NVIDIA_CAPS" ]; then
+            if [ ! -d "$NVIDIA_CAPS" ]; then
               echo "Building NVIDIA-CAPS"
-              nvidia-container-cli --load-kmods info
+              # nvidia-container-cli --load-kmods info
             fi
 
             if [ ! -f "$MARKER" ]; then
@@ -214,8 +215,8 @@ in
         serviceConfig = {
           ExecStart = "${pkgs.docker-compose}/bin/docker-compose -f /etc/wolf/docker-compose.yml up";
           ExecStop = "${pkgs.docker-compose}/bin/docker-compose -f /etc/wolf/docker-compose.yml down";
-          # Restart = "on-failure"; # Usually
-          Restart = "no"; # While debugging
+          Restart = "on-failure"; # Usually
+          # Restart = "no"; # While debugging
           WorkingDirectory = "/etc/wolf";
         };
 
