@@ -41,7 +41,7 @@
       NVD_BACKEND = "direct";
       #XDG_SESSION_TYPE = "wayland";
     };
-
+    nixGL.vulkan.enable = true;
     environment.systemPackages = with pkgs; [
       libva-utils
       vdpauinfo
