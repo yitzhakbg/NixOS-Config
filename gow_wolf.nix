@@ -55,6 +55,10 @@ in
           [
             "WOLF_RENDER_NODE=software"
           ]
+        else if cfg.gpu_type == "nvidia" then
+          [
+            "NVIDIA_DRIVER_VOLUME_NAME=nvidia-driver-vol"
+          ]
         else
           [ ];
 
@@ -67,7 +71,6 @@ in
           [ ];
 
       dockerComposeConfig = {
-        version = "3";
         services.wolf = {
           image = "ghcr.io/games-on-whales/wolf:stable";
           environment = wolfEnvironment ++ [
@@ -87,8 +90,8 @@ in
             "/dev/uhid"
           ];
           network_mode = "host";
-          # restart = "unless-stopped";
-          restart = "no";
+          restart = "unless-stopped";
+          # restart = "no";
         };
       };
     in
@@ -148,8 +151,8 @@ in
 
       # Enable PulseAudio
       # sound.enable = true;
-      hardware.pulseaudio.enable = true;
-      hardware.pulseaudio.support32Bit = true;
+      services.pulseaudio.enable = true;
+      services.pulseaudio.support32Bit = true;
 
       # Extra groups (not entirely sure this is needed)
       # users.groups.ops.gid = 1000;
@@ -181,20 +184,20 @@ in
           RemainAfterExit = true;
           ExecStart = pkgs.writeShellScript "build-nvidia-volume and nvidia-caps" ''
             set -euo pipefail
-            set PATH=$PATH:/run/current-system/sw/bin
+            export PATH=$PATH:/run/current-system/sw/bin
 
             MARKER=/etc/wolf/.nvidia-driver-vol-ready
             NVIDIA_CAPS=/dev/nvidia-caps
             if [ ! -d "$NVIDIA_CAPS" ]; then
               echo "Building NVIDIA-CAPS"
-              # nvidia-container-cli --load-kmods info
+                nvidia-container-cli --load-kmods info
             fi
 
             if [ ! -f "$MARKER" ]; then
               echo "Building NVIDIA driver volume - Started"
-              curl https://raw.githubusercontent.com/games-on-whales/gow/master/images/nvidia-driver/Dockerfile \
-                | docker build -t gow/nvidia-driver:latest -f - --build-arg NV_VERSION=$(cat /sys/module/nvidia/version) .
-              docker create --rm --mount source=nvidia-driver-vol,destination=/usr/nvidia gow/nvidia-driver:latest sh
+              ${pkgs.curl}/bin/curl https://raw.githubusercontent.com/games-on-whales/gow/master/images/nvidia-driver/Dockerfile \
+                | ${pkgs.docker}/bin/docker build -t gow/nvidia-driver:latest -f - --build-arg NV_VERSION=$(cat /sys/module/nvidia/version) .
+              ${pkgs.docker}/bin/docker create --rm --mount source=nvidia-driver-vol,destination=/usr/nvidia gow/nvidia-driver:latest sh
 
               echo "Building NVIDIA driver volume - Finished"
               touch "$MARKER"
