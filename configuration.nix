@@ -89,7 +89,7 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ybg = {
-    isSystemUser = true;
+    isNormalUser = true;
     description = "ybg";
     group = "users";
     home = "/home/ybg";
@@ -153,7 +153,8 @@
     mpv
     zoxide
     nixd
-    nil # in addition to nixd
+    alejandra
+    # nil # in addition to nixd
     # podman-desktop
     docker
     docker-compose
